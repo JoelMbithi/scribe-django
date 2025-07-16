@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 
     #Own
     'blog.apps.BlogConfig',
+   
      
       
    'django_browser_reload',  # for auto-refresh (optional but helpful)
