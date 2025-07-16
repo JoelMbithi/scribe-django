@@ -3,7 +3,7 @@
 {% block title %}Employee Table{% endblock %}
 
 {% block content %}
-     <a href="{% url 'insert' %}" 
+<a href="{% url 'insert' %}" 
    class="inline-flex items-center gap-2 mb-6 px-5 py-2.5 bg-blue-600 text-white font-semibold text-sm rounded hover:bg-blue-700 transition duration-200 shadow-md">
    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
@@ -11,31 +11,35 @@
    Add New Employee
 </a>
 
-
-    <div class="overflow-x-auto shadow-xl rounded-lg border border-gray-300 bg-white">
-        <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-blue-100">
-                <tr>
-                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Employee ID</th>
-                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Name</th>
-                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Email</th>
-                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Occupation</th>
-                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Salary</th>
-                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Gender</th>
-                </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
-                {% for result in data %}
-                <tr class="hover:bg-gray-50 transition duration-150">
-                    <td class="px-6 py-4 whitespace-nowrap">{{ result.id }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">{{ result.name }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">{{ result.email }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">{{ result.occupation }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">{{ result.salary }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">{{ result.gender }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+<div class="overflow-x-auto shadow-xl rounded-lg border border-gray-300 bg-white">
+    <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-blue-100">
+            <tr>
+                <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Employee ID</th>
+                <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Name</th>
+                <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Email</th>
+                <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Occupation</th>
+                <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Salary</th>
+                <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Gender</th>
+                <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Actions</th>
+            </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+            {% for result in data %}
+            <tr class="hover:bg-gray-50 transition duration-150">
+                <td class="px-6 py-4 whitespace-nowrap">{{ result.id }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ result.name }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ result.email }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ result.occupation }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ result.salary }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ result.gender }}</td>
+                <td class="px-6 py-4 whitespace-nowrap flex gap-4">
+                    <a href="edit/{{ result.id }}" class="text-blue-600 hover:underline">Edit</a>
+                    <a href="delete/{{ result.id }}" class="text-red-600 hover:underline" onclick="return confirm('Are you sure you want to delete this employee?');">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}
