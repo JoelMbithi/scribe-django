@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'dist/style.css' %}">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% if title %}{{ title }}{% else %}Joel Mbithi{% endif %}</title>
+    
+  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <meta name="description" content="Joel Mbithi - Full-stack Django & React Developer Portfolio">
+    <meta name="keywords" content="Django Developer, React, Full Stack, Portfolio, Joel Mbithi">
+    <meta name="author" content="Joel Mbithi">
+
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  </head>
+
+  <!-- 👇 Layout fix: full height, column layout -->
+  <body class="bg-gray-50 min-h-screen flex flex-col">
+
+    {% include "Navbar/navbar.html" %}
+
+    <!-- 👇 Main content grows to fill space -->
+    <main class="flex-grow  ">
+      {% block content %}{% endblock %}
+    </main>
+
+  <div class="mt-20">
+      {% include "Footer/footer.html" %}
+
+  </div>
+    <script>feather.replace();</script>
+  </body>
+</html>

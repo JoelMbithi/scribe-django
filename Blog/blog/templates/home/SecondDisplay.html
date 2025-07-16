@@ -1,0 +1,87 @@
+{% load static %}
+
+<nav class="bg-gray-50 px-2 sm:px- md:px-6 xl:px-24 py-10">
+  <div class="flex flex-col md:flex-row items-center justify-between gap-12">
+
+    <!-- Left Image (show on all screens) -->
+    <div class="w-full md:flex-1">
+      <img 
+        src="{% static 'images/fler1.png' %}" 
+        alt="Flyer" 
+        class="w-full max-h-[400px] object-contain"
+      />
+    </div>
+
+    <!-- Right Text & Features -->
+    <div class="w-full md:flex-1 max-w-2xl space-y-10">
+      
+      <!-- Heading -->
+      <div class="text-center md:text-left space-y-2">
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-800 leading-tight">
+          Transforming Tech Challenges Into Strategic Advantages
+        </h1>
+        <p class="text-base md:text-lg text-gray-600">
+          Where innovation meets reliability – we bridge the gap between complex technology 
+          and business success through tailored IT solutions.
+        </p>
+      </div>
+
+      <!-- Feature Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        {% for card in cards %}
+        <div class="bg-white hover:bg-red-800 hover:text-white shadow-md rounded-xl p-6 transition-all transform hover:scale-105 border border-gray-200">
+          <div class="bg-{{ card.bg }} p-3 rounded-xl w-12 h-12 flex items-center justify-center mb-4">
+            <ion-icon name="{{ card.icon }}" class="text-2xl text-{{ card.color }}"></ion-icon>
+          </div>
+          <h3 class="font-semibold text-lg mb-2">{{ card.title }}</h3>
+          <p class="text-sm">{{ card.description }}</p>
+        </div>
+        {% endfor %}
+      </div>
+
+      <!-- Accomplishments Section -->
+      <div class="w-full bg-white rounded-xl p-6 shadow-md flex flex-col md:flex-row items-center md:items-start gap-6">
+        
+        <!-- List Section -->
+        <div class="flex-1">
+          <h2 class="text-xl font-semibold text-gray-800 mb-4 text-center md:text-left">
+            Accomplishments
+          </h2>
+          <ul class="space-y-">
+            <li class="flex items-start gap-3">
+              <ion-icon name="checkmark-done-circle-outline" class="text-orange-600 text-2xl"></ion-icon>
+              <span class="text-gray-700 text-sm">Completed Full Stack Food Delivery Platform</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <ion-icon name="checkmark-done-circle-outline" class="text-orange-600 text-2xl"></ion-icon>
+              <span class="text-gray-700 text-sm">Mastered React.js and Node.js Integration</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <ion-icon name="checkmark-done-circle-outline" class="text-orange-600 text-2xl"></ion-icon>
+              <span class="text-gray-700 text-sm">Deployed Projects to Render and Vercel</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <ion-icon name="checkmark-done-circle-outline" class="text-orange-600 text-2xl"></ion-icon>
+              <span class="text-gray-700 text-sm">Integrated Stripe for Real Payments</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <ion-icon name="checkmark-done-circle-outline" class="text-orange-600 text-2xl"></ion-icon>
+              <span class="text-gray-700 text-sm">Built Admin Dashboards with Role-Based Access</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Trophy Badge -->
+        <div class="w-32 h-32 sm:w-40 sm:h-40 bg-orange-600 rounded-xl flex flex-col items-center justify-center shadow-lg hover:scale-105 transition-transform duration-300">
+          <div class="p-4 rounded-full">
+            <ion-icon name="trophy" class="text-black text-5xl sm:text-6xl"></ion-icon>
+          </div>
+          <h1 class="text-xs sm:text-sm bg-gray-900 text-white w-full text-center mt-2 p-2 font-semibold rounded-b-xl">
+            Success <br> Badge
+          </h1>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</nav>

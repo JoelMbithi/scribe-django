@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}Add New Employee | Your Company Name{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
+   <div class="flex items center justify-between">
+     <h1 class="text-2xl font-semibold text-gray-800 mb-6">Add New Employee</h1>
+       <a href="{% url 'index' %}" 
+   class="inline-flex items-center gap-2 mb-6 px-5 py-2.5 bg-blue-600 text-white font-semibold text-sm rounded hover:bg-blue-700 transition duration-200 shadow-md">
+   
+   Home Page
+</a>
+   </div>
+    <!-- Success Messages -->
+    {% if messages %}
+    <div class="mb-6">
+        {% for message in messages %}
+        <div class="{% if message.tags == 'success' %}bg-green-50 border border-green-200 text-green-700{% else %}bg-blue-50 border border-blue-200 text-blue-700{% endif %} px-4 py-3 rounded-md mb-4 flex items-center">
+            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+            </svg>
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form action="" method="POST" class="space-y-6">
+        {% csrf_token %}
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Name Field -->
+            <div class="space-y-1">
+                <label for="name" class="block text-sm font-medium text-gray-700">Full Name  <span class="text-red-600">*</span></label>
+                <input type="text" id="name" name="name" placeholder="Enter full name" required
+                    class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150">
+            </div>
+
+            <!-- Email Field -->
+            <div class="space-y-1">
+                <label for="email" class="block text-sm font-medium text-gray-700">Email Address  <span class="text-red-600">*</span></label>
+                <input type="email" id="email" name="email" placeholder="Enter email address" required
+                    class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150">
+            </div>
+
+            <!-- Occupation Field -->
+            <div class="space-y-1">
+                <label for="occupation" class="block text-sm font-medium text-gray-700">Occupation  <span class="text-red-600">*</span></label>
+                <select id="occupation" name="occupation" required
+                    class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 bg-white">
+                    <option value="" disabled selected>Select occupation</option>
+                    <option value="Developer">Developer</option>
+                    <option value="Designer">Designer</option>
+                    <option value="Manager">Manager</option>
+                    <option value="Analyst">Analyst</option>
+                    <option value="Administrator">Administrator</option>
+                </select>
+            </div>
+
+            <!-- Salary Field -->
+            <div class="space-y-1">
+                <label for="salary" class="block text-sm font-medium text-gray-700">Salary (ksh)  <span class="text-red-600">*</span></label>
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500"></span>
+                    <input type="number" id="salary" name="salary" placeholder="0.00" min="0" step="0.01" required
+                        class="w-full border border-gray-300 rounded-md px-3 py-2 pl-7 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150">
+                </div>
+            </div>
+
+            <!-- Gender Field -->
+            <div class="space-y-1">
+                <span class="block text-sm font-medium text-gray-700">Gender <span class="text-red-600">*</span></span>
+                <div class="flex space-x-4 mt-1">
+                    <label class="inline-flex items-center">
+                        <input type="radio" name="gender" value="M" required
+                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
+                        <span class="ml-2 text-gray-700">Male</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="radio" name="gender" value="F"
+                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
+                        <span class="ml-2 text-gray-700">Female</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="radio" name="gender" value="O"
+                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
+                        <span class="ml-2 text-gray-700">Other</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="flex justify-end space-x-3 pt-4 border-t border-gray-200">
+            <button type="button" onclick="window.history.back()"
+                class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150">
+                Cancel
+            </button>
+            <button type="submit"
+                class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150">
+                Save Employee
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

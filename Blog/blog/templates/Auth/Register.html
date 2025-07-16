@@ -1,0 +1,67 @@
+{% extends "blog/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="flex items-center justify-center min-h-screen bg-gray-100 px-4">
+  <div class="bg-white shadow-lg rounded-xl p-4 mt-10 flex justify-center flex-col w-100 max-w-md">
+    <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Create Account</h2>
+
+    <form method="POST" action="" enctype="multipart/form-data" class="space-y-5">
+      {% csrf_token %}
+       
+      <!-- Profile Picture Upload -->
+      <div class="flex flex-col items-center mb-4">
+        <div class="relative w-15 h-15 mt-4">
+          <img id="profile-preview" src="{% static 'images/signin.gif' %}" 
+               class="w-full h-full rounded-full object-cover border-2 border-gray-200">
+        </div>
+        <label class="cursor-pointer mt-2">
+          <span class="bg-orange-600 hover:bg-orange-700 text-white  text-sm font-medium py-2 px-4 rounded-md transition duration-300">
+            Upload Photo
+          </span>
+          <input type="file" name="profile_picture" id="profile_picture" 
+                 class="hidden" accept="image/*">
+        </label>
+      </div>
+      <!-- Username -->
+      <div class="mt-8">
+        <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+        <input type="text" name="username" id="username" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:outline-none" placeholder="joe" required>
+      </div>
+
+      <!-- Email -->
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-700  mt-4">Email Address</label>
+        <input type="email" name="email" id="email" class="mt-1 w-full  px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:outline-none" placeholder="joellembithi@example.com" required>
+      </div>
+
+      <!-- Password -->
+      <div>
+        <label for="password1" class="block text-sm font-medium text-gray-700 mt-4">Password</label>
+        <input type="password" name="password1" id="password1" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:outline-none" placeholder="••••••••" required>
+      </div>
+
+      <!-- Confirm Password -->
+      <div>
+        <label for="password2" class="block text-sm font-medium text-gray-700  mt-4">Confirm Password</label>
+        <input type="password" name="password2" id="password2" class="mt-1  w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:outline-none" placeholder="••••••••" required>
+      </div>
+
+     
+
+      <!-- Submit Button -->
+      <div>
+        <button type="submit" class="w-full  mt-4 bg-orange-600 hover:bg-orange-700 text-white font-semibold py-2 px-4 rounded-md transition duration-300">
+          Register
+        </button>
+      </div>
+
+      <!-- Already have an account? -->
+      <p class="text-sm text-center text-gray-600  mt-4">
+        Already have an account?
+        <a href="{% url 'login' %}" class="text-orange-600 hover:text-orange-700 font-medium">Login</a>
+      </p>
+    </form>
+  </div>
+</div>
+{% endblock %}

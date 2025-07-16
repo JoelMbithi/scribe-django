@@ -1,0 +1,29 @@
+{% extends "blog/base.html" %}
+
+{% load static %}
+
+
+{% block content %}
+ <nav class="flex flex-row gap-10  mt-20 px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
+   <div class="mt-4 p-4 flex flex-col ">
+      <h2 class="text-4xl md:text-6xl text-gray-800 font-bold">we create <br><span class="text-orange-600">solution</span> for <br> your business</h2>
+      <p class='p-4 mt-4'>Our team keeps a keen eye on emerging  trends <br>
+      and technologies to ensure your marketing 
+      campaign remain edge
+      </p>
+      <div class="bg-orange-600 mt-6 w-40 flex justify-center p-3">Explore  </div>
+   </div>
+   <div>
+      <img src="{% static 'images/blog.jpeg' %}" alt="Content Creation" class="">
+   </div>
+
+  
+   
+ </nav>
+  <div class="mt-4">
+   {% include "blog/recentBlog.html" %}
+  </div>
+  <div class="mt-20">
+    {% include "blog/solution.html"%}
+  </div>
+    {% endblock %}

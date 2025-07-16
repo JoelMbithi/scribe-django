@@ -1,0 +1,17 @@
+{% extends "blog/base.html" %} 
+
+{% load static %}
+
+{% block content %}
+  {% include "home/TopDisplay.html" %}
+<!-- Blog posts -->
+   {% include "home/SecondDisplay.html" %}
+  
+   <!--service page-->
+   {% include "home/ServiceDisplay.html" %}
+
+   {% include "home/socialMedial.html"%}
+
+   {%include "home/whyChooseUs.html"%}
+   
+{% endblock %}

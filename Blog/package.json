@@ -1,0 +1,27 @@
+{
+  "name": "scribe-django",
+  "version": "1.0.0",
+  "description": "A clean and professional Django application for writing, publishing, and learning.",
+  "main": "index.js",
+"scripts": {
+  "watch:css": "npx tailwindcss -i ./static/src/style.css -o ./static/dist/style.css --watch",
+  "django": "python3 manage.py runserver",
+  "dev": "concurrently \"npm run watch:css\" \"npm run django\""
+}
+,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JoelMbithi/scribe-django.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JoelMbithi/scribe-django/issues"
+  },
+  "homepage": "https://github.com/JoelMbithi/scribe-django#readme",
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.11",
+    "tailwindcss": "^4.1.11"
+  }
+}

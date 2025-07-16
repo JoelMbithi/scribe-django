@@ -1,0 +1,230 @@
+{% extends "blog/base.html" %}
+{% load static %}
+
+{% block content %}
+<section class="max-w-5xl mx-auto px-6 py-12">
+  <!-- Hero Section with Gradient Background -->
+  <div class="relative overflow-hidden rounded-2xl mt-10 p-8 md:p-12 mb-16 text-gray-800">
+    <div class="relative z-10">
+       <img src="{% static 'images/joe.jpeg' %}" alt="Joel Mbithi" 
+               class="w-20 h-20 rounded-full mb-2 object-cover shadow-lg transform group-hover:scale-105 transition duration-500">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4">Joel Mbithi</h1>
+      <div class="w-24 h-1.5 bg-white/80 mb-6 rounded-full"></div>
+      <p class="text-xl md:text-2xl font-light max-w-2xl leading-relaxed">
+        Full-Stack Developer | Django & React Specialist | Problem Solver
+      </p>
+    </div>
+    <div class="absolute -right-20 -top-20 w-64 h-64 rounded-full bg-white/10"></div>
+    <div class="absolute -left-20 -bottom-20 w-64 h-64 rounded-full bg-white/10"></div>
+  </div>
+
+  <!-- Main Content Container -->
+  <div class="grid md:grid-cols-4 gap-8">
+    <!-- Sidebar with Profile Image -->
+    <div class="md:col-span-1">
+      <div class="sticky top-8">
+        <div class="relative group ml-10">
+         
+          <div class="absolute inset-0 bg-blue-600/10 rounded-2xl mix-blend-multiply group-hover:opacity-0 transition duration-500"></div>
+        </div>
+        
+        <!-- Quick Contact -->
+        <div class="mt-6 bg-white mb-10 p-6 rounded-xl  border border-gray-100">
+          <h3 class="font-medium text-gray-900 mb-3">Let's Connect</h3>
+          <ul class="space-y-3">
+            <li class="flex items-center">
+              <div class="w-5 h-5 flex-shrink-0 mr-3 text-blue-600">
+                <svg viewBox="0 0 20 20" fill="currentColor" class="w-full h-full">
+                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                </svg>
+              </div>
+              <a href="mailto:joellembithi@gmail.com" class="text-gray-700 hover:text-blue-600 transition">joellembithi@gmail.com</a>
+            </li>
+            <li class="flex items-center">
+              <div class="w-5 h-5 flex-shrink-0 mr-3 text-gray-800">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full">
+                  <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+              <a href="https://github.com/Joelmbithi" class="text-gray-700 hover:text-blue-600 transition">GitHub</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="md:col-span-3 space-y-12">
+      <!-- Professional Background -->
+      <section class="mt-8 mb-6 text-gray-800 p-8 rounded-2xl  border border-gray-100">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6 relative">
+          <span class="relative z-10  flex items-center justify-center">Professional Background</span>
+          <span class="absolute bottom-0 left-0 w-16 h-1 bg-blue-600 rounded-full"></span>
+        </h2>
+        <div class="prose prose-lg text-gray-700 max-w-none">
+          <p class="mt-6">
+            I'm <span class="text-orange-600 text-xl  ">Joel Mbithi</span>, a passionate full-stack developer with expertise in building robust, scalable web applications using Django and React. With several years of hands-on experience, I specialize in transforming complex technical challenges into elegant, business-focused solutions.
+          </p>
+          <p>
+            My comprehensive skill set covers the entire development lifecycle - from initial concept and system architecture to backend implementation, frontend development, and deployment. I'm dedicated to writing clean, maintainable code that not only solves immediate problems but stands the test of time.
+          </p>
+        </div>
+      </section>
+
+      <!-- Technical Expertise -->
+      <section class="bg-white p-8 rounded-2xl  border border-gray-100">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6 relative">
+          <span class="relative z-10 text-gray-800 flex items-center justify-center">Technical Expertise</span>
+          <span class="absolute bottom-0 left-0 w-16 h-1 bg-blue-600 rounded-full"></span>
+        </h2>
+        
+        <div class="grid md:grid-cols-2 gap-8">
+          <!-- Core Technologies -->
+          <div class="bg-gray-50 p-6 rounded-xl hover:shadow-lg transition duration-300">
+            <div class="flex items-center mb-4">
+              <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                </svg>
+              </div>
+              <h3 class="text-xl font-semibold text-gray-800">Core Technologies</h3>
+            </div>
+            <ul class="space-y-3">
+              <li class="flex items-center">
+                <span class="w-2 h-2 bg-blue-600 rounded-full mr-3"></span>
+                <span>Python/Django & Django REST Framework</span>
+              </li>
+              <li class="flex items-center">
+                <span class="w-2 h-2 bg-blue-600 rounded-full mr-3"></span>
+                <span>JavaScript/TypeScript (React, Next.js)</span>
+              </li>
+              <li class="flex items-center">
+                <span class="w-2 h-2 bg-blue-600 rounded-full mr-3"></span>
+                <span>PostgreSQL & MongoDB</span>
+              </li>
+              <li class="flex items-center">
+                <span class="w-2 h-2 bg-blue-600 rounded-full mr-3"></span>
+                <span>Docker & Kubernetes</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Methodologies -->
+          <div class="bg-gray-50 p-6 rounded-xl hover:shadow-lg transition duration-300">
+            <div class="flex items-center mb-4">
+              <div class="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center mr-4">
+                <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                </svg>
+              </div>
+              <h3 class="text-xl font-semibold text-gray-800">Methodologies</h3>
+            </div>
+            <ul class="space-y-3">
+              <li class="flex items-center">
+                <span class="w-2 h-2 bg-indigo-600 rounded-full mr-3"></span>
+                <span>Agile Development</span>
+              </li>
+              <li class="flex items-center">
+                <span class="w-2 h-2 bg-indigo-600 rounded-full mr-3"></span>
+                <span>Test-Driven Development</span>
+              </li>
+              <li class="flex items-center">
+                <span class="w-2 h-2 bg-indigo-600 rounded-full mr-3"></span>
+                <span>CI/CD Pipelines</span>
+              </li>
+              <li class="flex items-center">
+                <span class="w-2 h-2 bg-indigo-600 rounded-full mr-3"></span>
+                <span>Microservices Architecture</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Blog Offerings -->
+      <section class="bg-white p-8 rounded-2xl shadow-md border border-gray-100">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6 relative">
+          <span class="relative flex items-center justify-center text-gray-800 z-10"><span class="gap-2 font-bold  text-4xl h">|</span>What This Blog Offers</span>
+          <span class="absolute bottom-0 left-0 w-16 h-1 bg-blue-600 rounded-full"></span>
+        </h2>
+        
+        <div class="flex flex-col md:flex-row gap-6">
+          <!-- Tutorials Card -->
+          <div class="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-100 transform hover:-translate-y-2 transition duration-300">
+            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+              <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+              </svg>
+            </div>
+          
+            <div class="flex flex-col items-center">
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">In-Depth Tutorials</h3>
+            <p class="text-gray-600">Comprehensive guides covering modern web development techniques, frameworks, and best practices with real-world applications.</p>
+            </div>
+          </div>
+
+          <!-- Case Studies Card -->
+          <div class="bg-gradient-to-br from-purple-50 to-indigo-50 p-6 rounded-xl border border-purple-100 transform hover:-translate-y-2 transition duration-300">
+            <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+              <svg class="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+              </svg>
+            </div>
+             <div class="flex flex-col items-center">
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Project Case Studies</h3>
+            <p class="text-gray-600">Detailed breakdowns of real-world projects, including architecture decisions, challenges faced, and lessons learned.</p>
+          </div>
+        </div>
+
+          <!-- Insights Card -->
+          <div class="bg-gradient-to-br from-indigo-50 to-blue-50 p-6 rounded-xl border border-indigo-100 transform hover:-translate-y-2 transition duration-300">
+            <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4">
+              <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+              </svg>
+            </div>
+            <div class="flex flex-col items-center">
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Industry Insights</h3>
+            <p class="text-gray-600">Analysis of emerging technologies, trends, and best practices in full-stack development and software engineering.</p>
+          </div>
+        </div>
+        </div>
+      </section>
+
+      <!-- Call to Action -->
+      <section class=" mb-10  p-8 rounded-2xl mt-20 ">
+        <div class="text-center">
+          <h2 class="text-2xl md:text-3xl text-gray-800  font-bold mb-4">Ready to <span class="text-3xl md:text-5xl  text-orange-600"> Collaborate ?</span></h2>
+          <p class="text-lg mt-4 mb-6 max-w-2xl text-black mx-auto opacity-90">
+            Whether you have a project in mind or just want to discuss technology, I'd love to hear from you.
+          </p>
+          <div class="flex  flex-col md:flex-row justify-center gap-4">
+           <!--Email-->
+            <div class=" mt-10 flex flex-col items-center p-4">
+              <a href="mailto:joellembithi@gmail.com" class="flex items-center  w-40 justify-center bg-white px-6 py-3 text-blue-600 font-medium rounded-lg hover:bg-gray-100 transition duration-300 shadow-sm">
+              <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+              </svg>
+              
+            </a>
+            <p class="text-black text-sm mt-2">Send Me an Email</p>
+            </div>
+            <!--Github-->
+             <div class=" w-30 mt-10 flex flex-col items-center p-2 ">
+            <a href="https://github.com/Joelmbithi" class="flex items-center bg-white  w-40  justify-center px-6 py-3 bg-blak text-black font-medium rounded-lg hover:bg-white/20 transition  shadow-sm duration-300 border border-white/20">
+              <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"/>
+              </svg>
+              
+            </a>
+            <p class="text-sm text-black mt-2">Visit My GitHub</p>
+          </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</section>
+{% endblock %}
