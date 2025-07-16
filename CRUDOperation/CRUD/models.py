@@ -10,3 +10,4 @@ class EmployeeModel(models.Model):
 
     class Meta:
         db_table = "employees" 
+#
