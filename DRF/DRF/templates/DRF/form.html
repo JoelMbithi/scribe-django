@@ -6,12 +6,12 @@
   <div class="flex flex-col items-center justify-center">
     <h2 class="text-2xl text-gray-800 ">Employee Form</h2>
 
-    <form method="post" action="" autocomplete="off" class="w-full max-w-md bg-white p-6 rounded shadow">
+    <form method="post" action="{% url 'forms'%}" autocomplete="off" class="w-full max-w-md bg-white p-6 rounded shadow">
       {% csrf_token %}
 
       <div class="mb-2">
         <label class="block text-slate-600">Full Name</label>
-        <input type="text" name="name" class="mt-2 w-full ring-2 ring-blue-600 rounded focus:outline-none focus:ring-red-500 p-2" required>
+        <input type="text" name="fullname" class="mt-2 w-full ring-2 ring-blue-600 rounded focus:outline-none focus:ring-red-500 p-2" required>
       </div>
 
       <div class="mb-4">
@@ -21,21 +21,23 @@
 
       <div class="mb-4">
         <label class="block text-slate-600">Phone Number</label>
-        <input type="text" name="phone" class="mt-2 w-full ring-2 ring-blue-600 rounded focus:outline-none focus:ring-red-500 p-2" required>
+        <input type="text" name="phoneNumber" class="mt-2 w-full ring-2 ring-blue-600 rounded focus:outline-none focus:ring-red-500 p-2" required>
       </div>
 
       <div class="mb-6">
         <label class="block text-slate-600">Position</label>
         <select name="position" class="mt-2 w-full ring-2 ring-blue-600 rounded focus:outline-none focus:ring-red-500 p-2" required>
-          <option value="">--Select Position--</option>
-          <option value="Developer">Developer</option>
-          <option value="Designer">Designer</option>
-          <option value="Manager">Manager</option>
-          <option value="QA Tester">QA Tester</option>
+             <option value="">--Select Position--</option>
+          {% for position in positions %}
+            <option value="{{ position.title }}">{{ position.title }}</option>
+          {% endfor %}
         </select>
       </div>
 
-      <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Submit</button>
+<button type="submit" class="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+  <i class="fa-solid fa-database"></i>
+  Submit
+</button>
     </form>
   </div>
 {% endblock %}

@@ -1,0 +1,79 @@
+{% extends "DRF/base.html" %}
+{% block content %}
+<div class="flex flex-col items-center justify-center">
+  <h2 class="text-2xl text-gray-800 mb-4">Update Employee</h2>
+
+  {% if messages %}
+    <div class="mb-4 w-full max-w-md">
+      {% for message in messages %}
+        <div class="p-2 rounded {{ message.tags }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <form
+    method="post"
+    action="{% url 'update' employee.id %}"
+    autocomplete="off"
+    class="w-full max-w-md bg-white p-6 rounded shadow"
+  >
+    {% csrf_token %}
+
+    <div class="mb-4">
+      <label class="block text-slate-600">Full Name</label>
+      <input
+        type="text" name="fullname"
+        class="mt-2 w-full ring-2 ring-blue-600 rounded p-2"
+        required
+        value="{{ employee.fullname }}"
+      >
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-slate-600">Email</label>
+      <input
+        type="email" name="email"
+        class="mt-2 w-full ring-2 ring-blue-600 rounded p-2"
+        required
+        value="{{ employee.email }}"
+      >
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-slate-600">Phone Number</label>
+      <input
+        type="text" name="phoneNumber"
+        class="mt-2 w-full ring-2 ring-blue-600 rounded p-2"
+        required
+        value="{{ employee.phoneNumber }}"
+      >
+    </div>
+
+    <div class="mb-6">
+      <label class="block text-slate-600">Position</label>
+      <select
+        name="position"
+        class="mt-2 w-full ring-2 ring-blue-600 rounded p-2"
+        required
+      >
+        <option value="">-- Select Position --</option>
+        {% for pos in positions %}
+          <option
+            value="{{ pos.title }}"
+            {% if employee.position.title == pos.title %}selected{% endif %}
+          >
+            {{ pos.title }}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <button
+      type="submit"
+      class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+    >
+      Update Employee
+    </button>
+  </form>
+</div>
+{% endblock %}
