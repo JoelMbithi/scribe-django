@@ -64,3 +64,16 @@ def updateEmployee(request, id):
         'is_update':   True,
         'employee':    employee,
     })
+
+
+#delete employee
+def deleteEmployee(request,id):
+    employee = get_object_or_404(DevEmployee,pk=id)
+
+    if request.method == 'POST' :
+       employee.delete()
+       messages.success(request,"Successful Deleted Employee")
+       return redirect('home')
+    
+
+    return render(request,'DRF/delete.html',{'employee':employee})
