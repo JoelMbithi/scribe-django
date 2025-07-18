@@ -1,0 +1,71 @@
+  <!-- templates/Base/base.html -->
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      {% load static %}
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>{% block title %}DRF Dashboard | Developer Hub{% endblock %}</title>
+      <link rel="stylesheet" href="{% static 'dist/styles.css' %}">
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  </head>
+
+  <body class="min-h-screen bg-gradient-to-br from-gray-50 to-indigo-50 font-sans text-gray-800">
+    <script src="https://unpkg.com/alpinejs" defer></script>
+
+  <div x-data="{ isOpen: false }" class="flex flex-col md:flex-row min-h-screen">
+    
+    <!-- Mobile Top Bar -->
+    <div class="md:hidden flex justify-between items-center p-4 bg-[#08384e] text-white">
+      <div class="font-bold">Inventory Dashboard</div>
+      <button @click="isOpen = !isOpen">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- LEFT SIDEBAR -->
+    <div :class="{ 'hidden': !isOpen }" class="md:flex flex-col w-full md:w-1/5 bg-[#08384e] min-h-screen">
+      <div class="flex flex-col items-center p-4 mt-10">
+        <img src="{% static 'image/logo.png' %}" alt="Logo" class="w-20 h-20 rounded-full shadow-md">
+        <h1 class="mt-4 text-white font-bold">Joe</h1>
+        <p class="text-sm text-slate-200">joellembithi@gmail.com</p>
+      </div>
+
+      <div class="flex flex-col items-center gap-2 mt-8">
+        {% for item in menu %}
+          <span class="flex items-center gap-3 p-2 text-white hover:bg-blue-500 rounded cursor-pointer w-4/5">
+            {{ item.icon|safe }}
+            {{ item.label }}
+          </span>
+        {% endfor %}
+      </div>
+
+      <div class="mt-auto mb-8">
+        <span class="flex items-center gap-2 text-red-400 p-4 hover:text-red-500 cursor-pointer w-4/5 mx-auto">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path d="M12 7v4"/>
+            <path d="M7.998 9.003a5 5 0 1 0 8-.005"/>
+            <circle cx="12" cy="12" r="10"/>
+          </svg>
+          Logout
+        </span>
+      </div>
+    </div>
+
+    <!-- RIGHT MAIN CONTENT -->
+    <div class="w-full md:w-4/5 flex flex-col">
+      <!-- Navbar at the very top -->
+      {% include "Home/home.html" %}
+     
+      <!-- Overview content below navbar -->
+      
+    </div>
+  </div>
+
+  {% if debug %}
+  <script src="{% url 'django_browser_reload:reload' %}"></script>
+  {% endif %}
+  </body>
+  </html>
