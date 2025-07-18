@@ -1,0 +1,199 @@
+<nav class="flex flex-col items-center">
+  <!--Top Container-->
+  <div class="flex flex-row gap-4">
+    <!--left container-->
+    <div class="flex flex-col bg-white rounded p-2">
+      <h1 class=" font-bold text-slate-700">No of Users</h1>
+      <div class="flex flex-col p-4">
+        <span
+          class="bg-[#86abbd] ring-2 ring-slate-500 rounded w-10 h-8 flex p-1 items-center justify-center"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-users-round-icon lucide-users-round"
+          >
+            <path d="M18 21a8 8 0 0 0-16 0" />
+            <circle cx="10" cy="8" r="5" />
+            <path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3" /></svg
+        ></span>
+        <h1 class="text-2xl font-bold mt-2">543 K</h1>
+        <p class="mt-1">Total Customers</p>
+      </div>
+    </div>
+    <!--Right container-->
+    <div class="flex flex-col p-2 bg-white w-100 rounded">
+      <!--left Side-->
+      <div class="flex flex-col items-center bg-white p-2 rounded w-fit">
+        <h1 class="text-slate-700 font-bold mb-2">Inventory Values</h1>
+      </div>
+      <div class="flex flex-row p-2 items-center gap-8 ml-4">
+        <!-- Pie chart SVG -->
+        <svg
+          width="120"
+          height="120"
+          viewBox="0 0 36 36"
+          class="rotate-[-90deg]"
+        >
+          <!-- Total circle (gray background) -->
+          <circle
+            cx="18"
+            cy="18"
+            r="16"
+            fill="none"
+            stroke="#e5e7eb"
+            stroke-width="4"
+          />
+          <!-- First section (blue) -->
+          <circle
+            cx="18"
+            cy="18"
+            r="16"
+            fill="none"
+            stroke="#3b82f6"
+            stroke-width="4"
+            stroke-dasharray="60, 40"
+            stroke-linecap="round"
+          />
+        </svg>
+
+        <div class="flex flex-col">
+          <span class="flex flex-row gap-2">
+            <span class="bg-[#e5e7eb] 0 p-2 rounded h-5 w-5"></span>
+            <h1>Sold units - 40%</h1>
+          </span>
+          <span class="flex flex-row gap-2 mt-2">
+            <span class="bg-[#3b82f6] p-2 rounded h-5 w-5"></span>
+            <h1>Total units - 60%</h1>
+          </span>
+        </div>
+      </div>
+
+      <!--right side-->
+    </div>
+  </div>
+
+  <!--Bottom Container-->
+  <div class="bg-white rounded-lg shadow-sm p-4 mt-4 flex flex-col w-full">
+    <!-- Header Section -->
+    <div class="flex flex-row justify-between items-center mb-4">
+      <h1 class="font-medium text-gray-800">Expenses vs Profit</h1>
+      <div class="flex items-center gap-2">
+        <span class="text-sm text-gray-500">Last 6 months</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-4 w-4 text-gray-400"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 9l-7 7-7-7"
+          />
+        </svg>
+      </div>
+    </div>
+
+    <!-- Graph Container -->
+    <div class="h-48">
+      <canvas id="expensesProfitChart"></canvas>
+    </div>
+  </div>
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const ctx = document
+        .getElementById("expensesProfitChart")
+        .getContext("2d");
+      new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: ["Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+          datasets: [
+            {
+              label: "Profit",
+              data: [200, 400, 300, 500, 600, 700],
+              borderColor: "#10b981",
+              backgroundColor: "rgba(16, 185, 129, 0.1)",
+              borderWidth: 2,
+              tension: 0.4,
+              fill: true,
+            },
+            {
+              label: "Expenses",
+              data: [300, 350, 250, 400, 500, 550],
+              borderColor: "#ef4444",
+              backgroundColor: "rgba(239, 68, 68, 0.1)",
+              borderWidth: 2,
+              tension: 0.4,
+              fill: true,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: {
+                color: "#e5e7eb",
+                drawBorder: false,
+              },
+              ticks: {
+                color: "#6b7280",
+              },
+            },
+            x: {
+              grid: {
+                display: false,
+                drawBorder: false,
+              },
+              ticks: {
+                color: "#6b7280",
+              },
+            },
+          },
+          plugins: {
+            legend: {
+              position: "top",
+              labels: {
+                color: "#374151",
+                boxWidth: 12,
+                padding: 16,
+                usePointStyle: true,
+                pointStyle: "circle",
+              },
+            },
+            tooltip: {
+              backgroundColor: "#1f2937",
+              titleColor: "#f9fafb",
+              bodyColor: "#f9fafb",
+              padding: 12,
+              usePointStyle: true,
+              cornerRadius: 8,
+            },
+          },
+          elements: {
+            point: {
+              radius: 4,
+              hoverRadius: 6,
+            },
+          },
+        },
+      });
+    });
+  </script>
+</nav>

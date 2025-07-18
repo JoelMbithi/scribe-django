@@ -6,6 +6,8 @@
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>{% block title %}DRF Dashboard | Developer Hub{% endblock %}</title>
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
       <link rel="stylesheet" href="{% static 'dist/styles.css' %}">
       <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   </head>
@@ -35,10 +37,11 @@
 
       <div class="flex flex-col items-center gap-2 mt-8">
         {% for item in menu %}
-          <span class="flex items-center gap-3 p-2 text-white hover:bg-blue-500 rounded cursor-pointer w-4/5">
+        
+          <a href="{{ item.url }}"class="flex items-center gap-3 p-2 text-white hover:bg-blue-500 rounded cursor-pointer w-4/5">
             {{ item.icon|safe }}
             {{ item.label }}
-          </span>
+          </a> 
         {% endfor %}
       </div>
 
@@ -55,7 +58,7 @@
     </div>
 
     <!-- RIGHT MAIN CONTENT -->
-    <div class="w-full md:w-4/5 flex flex-col">
+    <div class="w-full md:w-4/5 flex  flex-col  bg-[#86abbd]">
       <!-- Navbar at the very top -->
       {% include "Home/home.html" %}
      

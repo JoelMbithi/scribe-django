@@ -4,6 +4,7 @@ def displayItem(request):
     menu = [
         {
             'label': 'Dashboard',
+            'url': '/home/',
             'icon': '''
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -84,3 +85,7 @@ def displayItem(request):
     ]
 
     return render(request, 'Base/base.html', {'menu': menu})
+
+
+def Dashboard(request):
+    return render(request,"Home/home.html")

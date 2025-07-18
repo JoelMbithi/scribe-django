@@ -1,7 +1,12 @@
- <div class="flex flex-col">
+ <div class="flex  flex-col w-full ">
      <div class="sticky top-0 z-100">
        {% include "Navbar/Navbar.html" %}
      </div>
    
- {% include "OverView/OverView.html" %}
+ <div class="flex p-4 w-full">
+  {% include "OverView/OverView.html" %}
+ </div>
+ <div>
+  {% include "MainContainer/MainContainer.html"%}
+ </div>
   </div>
