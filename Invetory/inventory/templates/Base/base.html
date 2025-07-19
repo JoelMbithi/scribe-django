@@ -1,74 +1,386 @@
-  <!-- templates/Base/base.html -->
-  <!DOCTYPE html>
-  <html lang="en">
-  <head>
-      {% load static %}
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>{% block title %}DRF Dashboard | Developer Hub{% endblock %}</title>
-      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-      <link rel="stylesheet" href="{% static 'dist/styles.css' %}">
-      <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-  </head>
+<!-- templates/Base/base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}DRF Dashboard | Developer Hub{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'dist/styles.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
 
-  <body class="min-h-screen bg-gradient-to-br from-gray-50 to-indigo-50 font-sans text-gray-800">
-    <script src="https://unpkg.com/alpinejs" defer></script>
+<body class="min-h-screen bg-gradient-to-br from-gray-50 to-indigo-50 font-sans text-gray-800">
+<script src="https://unpkg.com/alpinejs" defer></script>
 
-  <div x-data="{ isOpen: false }" class="flex flex-col md:flex-row min-h-screen">
-    
-    <!-- Mobile Top Bar -->
-    <div class="md:hidden flex justify-between items-center p-4 bg-[#08384e] text-white">
-      <div class="font-bold">Inventory Dashboard</div>
-      <button @click="isOpen = !isOpen">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
-        </svg>
-      </button>
+<div x-data="{ isOpen: false }" class="flex flex-col md:flex-row min-h-screen">
+
+  <!-- Mobile Top Bar -->
+  <div class="md:hidden flex justify-between items-center p-4 bg-[#08384e] text-white">
+    <div class="font-bold">Inventory Dashboard</div>
+    <button @click="isOpen = !isOpen">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- LEFT SIDEBAR -->
+  <div :class="{ 'hidden': !isOpen }" class="md:flex flex-col w-full md:w-1/5 bg-[#08384e] min-h-screen">
+    <div class="flex flex-col items-center p-4 mt-10">
+      <img src="{% static 'image/logo.png' %}" alt="Logo" class="w-20 h-20 rounded-full shadow-md">
+      {% if user.is_authenticated %}
+        <h1 class="mt-4 text-white font-bold">{{ user.username }}</h1>
+        <p class="text-sm text-slate-200">{{ user.email }}</p>
+      {% else %}
+        <h1 class="mt-4 text-white font-bold">Guest</h1>
+        <p class="text-sm text-slate-200">Please log in</p>
+      {% endif %}
     </div>
 
-    <!-- LEFT SIDEBAR -->
-    <div :class="{ 'hidden': !isOpen }" class="md:flex flex-col w-full md:w-1/5 bg-[#08384e] min-h-screen">
-      <div class="flex flex-col items-center p-4 mt-10">
-        <img src="{% static 'image/logo.png' %}" alt="Logo" class="w-20 h-20 rounded-full shadow-md">
-        <h1 class="mt-4 text-white font-bold">Joe</h1>
-        <p class="text-sm text-slate-200">joellembithi@gmail.com</p>
-      </div>
+    <div class="flex flex-col items-center gap-2 mt-8">
+      {% for item in menu %}
+        <a href="{{ item.url }}" class="flex items-center gap-3 p-2 text-white hover:bg-blue-500 rounded cursor-pointer w-4/5">
+          {{ item.icon|safe }}
+          {{ item.label }}
+        </a>
+      {% endfor %}
+    </div>
 
-      <div class="flex flex-col items-center gap-2 mt-8">
-        {% for item in menu %}
-        
-          <a href="{{ item.url }}"class="flex items-center gap-3 p-2 text-white hover:bg-blue-500 rounded cursor-pointer w-4/5">
-            {{ item.icon|safe }}
-            {{ item.label }}
-          </a> 
-        {% endfor %}
-      </div>
-
-      <div class="mt-auto mb-8">
-        <span class="flex items-center gap-2 text-red-400 p-4 hover:text-red-500 cursor-pointer w-4/5 mx-auto">
+    <div class="mt-auto mb-8">
+      {% if user.is_authenticated %}
+        <a href="" class="flex items-center gap-2 text-red-400 p-4 hover:text-red-500 cursor-pointer w-4/5 mx-auto">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path d="M12 7v4"/>
             <path d="M7.998 9.003a5 5 0 1 0 8-.005"/>
             <circle cx="12" cy="12" r="10"/>
           </svg>
           Logout
-        </span>
-      </div>
-    </div>
-
-    <!-- RIGHT MAIN CONTENT -->
-    <div class="w-full md:w-4/5 flex  flex-col  bg-[#86abbd]">
-      <!-- Navbar at the very top -->
-      {% include "Home/home.html" %}
-     
-      <!-- Overview content below navbar -->
-      
+        </a>
+      {% else %}
+        <a href="{% url 'login' %}  " class="flex items-center gap-2 text-green-400 p-4 hover:text-green-500 cursor-pointer w-4/5 mx-auto">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"/>
+          </svg>
+          Login
+        </a>
+      {% endif %}
     </div>
   </div>
 
-  {% if debug %}
-  <script src="{% url 'django_browser_reload:reload' %}"></script>
-  {% endif %}
-  </body>
-  </html>
+  <!-- RIGHT MAIN CONTENT -->
+  <div class="w-full md:w-4/5 flex flex-col bg-[#86abbd]">
+
+    <!-- Sticky Navbar -->
+    <nav class="sticky top-0 z-50 w-full h-14 bg-white flex items-center justify-between shadow-md px-4">
+      <h1 class="text-lg md:text-2xl font-semibold text-slate-800">
+        {% if user.is_authenticated %}Welcome {{ user.username }}!{% else %}Welcome to Inventory Dashboard{% endif %}
+      </h1>
+      <div class="flex items-center gap-4">
+        <!-- Search -->
+        <div class="hidden md:flex relative w-64">
+          <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500" width="20" height="20" fill="none"
+               stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="m21 21-4.34-4.34"/>
+            <circle cx="11" cy="11" r="8"/>
+          </svg>
+          <input type="text" placeholder="Search..." class="w-full pl-10 pr-4 py-1 rounded-full ring-2 ring-slate-600 focus:outline-none focus:ring-blue-500"/>
+        </div>
+
+        <!-- Theme Toggle -->
+        <span class="cursor-pointer" onclick="toggleTheme()" id="themeIcon">
+          <!-- Default Moon Icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" id="iconSvg" width="24" height="24" fill="none"
+               stroke="currentColor" stroke-width="2" class="lucide lucide-moon">
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+          </svg>
+        </span>
+
+        <!-- Notification Bell -->
+        {% if user.is_authenticated %}
+        <div class="relative">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+               stroke="currentColor" stroke-width="2" class="lucide lucide-bell-dot">
+            <path d="M10.268 21a2 2 0 0 0 3.464 0"/>
+            <path d="M13.916 2.314A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.74 7.327A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673"/>
+            <circle cx="18" cy="8" r="3"/>
+          </svg>
+          <span class="absolute top-0 right-0 w-2.5 h-2.5 bg-red-600 rounded-full border-2 border-white"></span>
+        </div>
+        {% endif %}
+      </div>
+    </nav>
+
+    <!-- Main Content Area (below sticky nav) -->
+    <div class="flex flex-col px-4 py-6 mt-2">
+      {% block content %}
+      <!-- Hero Section -->
+      <div class="bg-white rounded shadow-md overflow-hidden mb-8">
+        <div class="md:flex">
+          <div class="md:flex-1 p-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">
+              {% if user.is_authenticated %}
+                Your Inventory Management Hub
+              {% else %}
+                Powerful Inventory Management Solution
+              {% endif %}
+            </h2>
+            <p class="text-gray-600 mb-6">
+              {% if user.is_authenticated %}
+                Track, manage, and optimize your inventory with our comprehensive dashboard. Get real-time insights and make data-driven decisions.
+              {% else %}
+                Sign in to access your personalized dashboard and take control of your inventory management.
+              {% endif %}
+            </p>
+            {% if not user.is_authenticated %}
+            <div class="flex gap-4">
+              <a href="{% url 'login' %}" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                Sign In
+              </a>
+              <a href="{% url 'register' %}" class="px-6 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition">
+                Register
+              </a>
+            </div>
+            {% endif %}
+          </div>
+          <div class="md:flex-1 hidden md:block bg-gradient-to-r from-blue-500 to-indigo-600 p-8 flex items-center justify-center">
+            <img src="{% static 'image/dashboard-illustration.svg' %}" alt="Dashboard Illustration" class="h-64">
+          </div>
+        </div>
+      </div>
+
+      <!-- Features Grid -->
+      {% if user.is_authenticated %}
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <!-- Quick Actions -->
+        <div class="bg-white p-6 rounded shadow-md">
+          <div class="flex items-center mb-4">
+            <div class="p-3 bg-blue-100 rounded-full mr-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800">Quick Actions</h3>
+          </div>
+          <div class="space-y-3">
+            <a href="#" class="flex items-center p-3 hover:bg-gray-50 rounded-lg transition">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+              </svg>
+              <span>Add New Product</span>
+            </a>
+            <a href="#" class="flex items-center p-3 hover:bg-gray-50 rounded-lg transition">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+              </svg>
+              <span>Process Order</span>
+            </a>
+            <a href="#" class="flex items-center p-3 hover:bg-gray-50 rounded-lg transition">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+              </svg>
+              <span>Generate Report</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Recent Activity -->
+       <!-- Recent Activity -->
+<div class="bg-white p-6 rounded-xl shadow-md">
+    <div class="flex items-center mb-4">
+        <div class="p-3 bg-green-100 rounded-full mr-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+            </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-800">Recent Activity</h3>
+    </div>
+    <div class="space-y-4">
+        {% for activity in recent_activities %}
+        <div class="flex items-start">
+            <div class="bg-blue-100 p-2 rounded-full mr-3">
+                {% if activity.icon == 'plus' %}
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+                </svg>
+                {% elif activity.icon == 'package' %}
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+                </svg>
+                {% else %}
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                {% endif %}
+            </div>
+            <div>
+                <p class="text-sm font-medium">{{ activity.message }}</p>
+                <p class="text-xs text-gray-500">
+                    {% if activity.time > timezone.now %}
+                        Scheduled for {{ activity.time|date:"M j, g:i A" }}
+                    {% else %}
+                        {{ activity.time|timesince }} ago
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+        <!-- Inventory Status -->
+        <div class="bg-white p-6 rounded-xl shadow-md">
+          <div class="flex items-center mb-4">
+            <div class="p-3 bg-orange-100 rounded-full mr-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800">Inventory Status</h3>
+          </div>
+          <div class="space-y-4">
+            <div>
+              <div class="flex justify-between mb-1">
+                <span class="text-sm font-medium">Total Products</span>
+                <span class="text-sm font-medium">1,245</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="bg-blue-600 h-2 rounded-full" style="width: 100%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-1">
+                <span class="text-sm font-medium">Low Stock</span>
+                <span class="text-sm font-medium">47</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="bg-yellow-500 h-2 rounded-full" style="width: 15%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-1">
+                <span class="text-sm font-medium">Out of Stock</span>
+                <span class="text-sm font-medium">12</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="bg-red-600 h-2 rounded-full" style="width: 5%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- Key Metrics -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div class="bg-white p-4 rounded-xl shadow-md text-center">
+          <div class="text-3xl font-bold text-blue-600 mb-2">1,245</div>
+          <div class="text-sm text-gray-600">Total Products</div>
+        </div>
+        <div class="bg-white p-4 rounded-xl shadow-md text-center">
+          <div class="text-3xl font-bold text-green-600 mb-2">876</div>
+          <div class="text-sm text-gray-600">In Stock</div>
+        </div>
+        <div class="bg-white p-4 rounded-xl shadow-md text-center">
+          <div class="text-3xl font-bold text-yellow-600 mb-2">47</div>
+          <div class="text-sm text-gray-600">Low Stock</div>
+        </div>
+        <div class="bg-white p-4 rounded-xl shadow-md text-center">
+          <div class="text-3xl font-bold text-red-600 mb-2">12</div>
+          <div class="text-sm text-gray-600">Out of Stock</div>
+        </div>
+      </div>
+
+      <!-- Recent Orders Table -->
+      {% if user.is_authenticated %}
+      <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8">
+        <div class="p-6 border-b border-gray-200">
+          <h3 class="text-xl font-semibold text-gray-800">Recent Orders</h3>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead class="bg-gray-50">
+              <tr>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order ID</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              <tr>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#4567</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">John Smith</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2023-06-15</td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Completed</span>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$1,245.00</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#4566</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Sarah Johnson</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2023-06-14</td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">Processing</span>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$845.50</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#4565</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Michael Brown</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2023-06-13</td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Pending</span>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$2,340.00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="p-4 border-t border-gray-200 text-center">
+          <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">View all orders</a>
+        </div>
+      </div>
+      {% else %}
+      <!-- Call to Action for Guests -->
+      <div class="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl shadow-md p-8 text-center text-white">
+        <h2 class="text-2xl font-bold mb-4">Ready to get started?</h2>
+        <p class="mb-6 max-w-2xl mx-auto">Join thousands of businesses managing their inventory with our powerful platform.</p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+          <a href="{% url 'register' %}" class="px-6 py-3 bg-white text-blue-600 rounded-lg font-medium hover:bg-gray-100 transition">
+            Create Free Account
+          </a>
+          <a href="#" class="px-6 py-3 border border-white text-white rounded-lg font-medium hover:bg-white hover:bg-opacity-10 transition">
+            Learn More
+          </a>
+        </div>
+      </div>
+      {% endif %}
+      {% endblock %}
+    </div>
+  </div>
+</div>
+
+<!-- Optional browser reload for dev -->
+{% if debug %}
+<script src="{% url 'django_browser_reload:reload' %}"></script>
+{% endif %}
+
+<script>
+  function toggleTheme() {
+    const html = document.documentElement;
+    const themeIcon = document.getElementById("themeIcon");
+
+    html.classList.toggle("dark");
+
+    themeIcon.innerHTML = html.classList.contains("dark")
+      ? `<svg xmlns="http://www.w3.org/2000/svg" id="iconSvg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>`
+      : `<svg xmlns="http://www.w3.org/2000/svg" id="iconSvg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-moon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>`;
+  }
+</script>
+
+</body>
+</html>
