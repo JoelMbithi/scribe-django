@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate  # Import authenticate
 from django.contrib import messages
-from .forms import RegisterForm
+from .forms import RegisterForm, CreateProduct
+from .models import Products
 
 def displayItem(request):
     return render(request, 'Base/base.html')
@@ -29,9 +30,29 @@ def Register(request):
         form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)  # ✅ this now correctly uses Django’s login()
+            login(request, user)  
             return redirect('')
     else:
         form = RegisterForm()
 
     return render(request, "Auth/Register.html", {'form': form})
+
+def Product(request):
+    if request.method == 'POST':
+        form = CreateProduct(request.POST, request.FILES) 
+        if form.is_valid():
+           form.save()
+           return redirect("products")
+    else:
+        form = CreateProduct()
+        # fetch all products
+    products = Products.objects.all()
+    return render(request, 'Product/product.html', {
+        'form': form,
+        'products': products
+    })
+
+    return render(request, 'Product/product.html',{'form':form})
+
+
+

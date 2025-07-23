@@ -1,16 +1,19 @@
 from django.db import models
 
 # Create your models here.
-# CATEGORY = (
-#     ('Stationary', 'Stationary'),
-#     ('Electronic', 'Electronic'),
-#     ('Food', 'Food')
-# )
 
-# class Products(models.Model):
-#     name = models.CharField(max_length=100)
-#     category = models.CharField(max_length=100, choices=CATEGORY)
-#     quantity = models.PositiveIntegerField()
+
+class Products(models.Model):
+    name = models.CharField(max_length=200)
+    category = models.CharField(max_length=100)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    stock = models.PositiveIntegerField()
+    image = models.ImageField(upload_to='products/', blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+    
+
 
 class Users(models.Model):
     name = models.CharField(max_length=100)
