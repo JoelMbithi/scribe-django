@@ -3,6 +3,26 @@ from django.utils import timezone
 from datetime import timedelta
 from .menu_data import MENU_ITEMS
 
+from .models import Products
+from django.contrib.auth import get_user_model
+from .models import Orders
+from django.db.models import Sum
+
+def global_data(request):
+    total_products = Products.objects.count()
+    total_users = get_user_model().objects.count()
+    total_orders = Orders.objects.count()
+    total_stocks = Products.objects.aggregate(total_stock_count=Sum('stock'))['total_stock_count'] or 0
+    out_of_stock = Products.objects.filter(stock=0).count()
+
+    return {
+        'total_products': total_products,
+        'total_users': total_users,
+        'total_orders': total_orders,
+        'total_stocks': total_stocks,
+        'out_of_stock': out_of_stock,
+    }
+
 def menu_items(request):
     # Process menu items
     processed_menu = []
@@ -33,4 +53,11 @@ def menu_items(request):
     return {
         'menu': processed_menu,
         'recent_activities': recent_activities
+    }
+
+def global_orders(request):
+    orders = Orders.objects.all().order_by('-date')[:3]
+    return {
+        'orders': orders,
+        'total_orders_count': orders.count()
     }

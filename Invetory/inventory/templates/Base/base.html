@@ -1,5 +1,5 @@
 <!-- templates/Base/base.html -->
-<!DOCTYPE html>
+<!DOCTYPE html class="light" lang="en" id="htmlTag">
 <html lang="en">
 <head>
     {% load static %}
@@ -27,7 +27,7 @@
 
   <!-- LEFT SIDEBAR -->
   <div :class="{ 'hidden': !isOpen }" class="md:flex flex-col w-full md:w-1/5 bg-[#08384e] min-h-screen">
-    <div class="flex flex-col items-center p-4 mt-10">
+    <a href="{% url "base" %}"  class="flex flex-col items-center p-4 mt-10">
       <img src="{% static 'image/logo.png' %}" alt="Logo" class="w-20 h-20 rounded-full shadow-md">
       {% if user.is_authenticated %}
         <h1 class="mt-4 text-white font-bold">{{ user.name }}</h1>
@@ -36,7 +36,7 @@
         <h1 class="mt-4 text-white font-bold">Guest</h1>
         <p class="text-sm text-slate-200">Please log in</p>
       {% endif %}
-    </div>
+    </a  >
 
     <div class="flex flex-col items-center gap-2 mt-8">
       {% for item in menu %}
@@ -49,7 +49,7 @@
 
     <div class="mt-auto mb-8">
       {% if user.is_authenticated %}
-        <a href="" class="flex items-center gap-2 text-red-400 p-4 hover:text-red-500 cursor-pointer w-4/5 mx-auto">
+        <a href="{% url "logout" %}" class="flex items-center gap-2 text-red-400 p-4 hover:text-red-500 cursor-pointer w-4/5 mx-auto">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path d="M12 7v4"/>
             <path d="M7.998 9.003a5 5 0 1 0 8-.005"/>
@@ -74,7 +74,7 @@
     <!-- Sticky Navbar -->
     <nav class="sticky top-0 z-50 w-full h-14 bg-white flex items-center justify-between shadow-md px-4">
       <h1 class="text-lg md:text-2xl font-semibold text-slate-800">
-        {% if user.is_authenticated %}Welcome {{ user.username }}!{% else %}Welcome to Inventory Dashboard{% endif %}
+        {% if user.is_authenticated %}Welcome {{ user.name }}!{% else %}Welcome to Inventory Dashboard{% endif %}
       </h1>
       <div class="flex items-center gap-4">
         <!-- Search -->
@@ -87,14 +87,14 @@
           <input type="text" placeholder="Search..." class="w-full pl-10 pr-4 py-1 rounded-full ring-2 ring-slate-600 focus:outline-none focus:ring-blue-500"/>
         </div>
 
-        <!-- Theme Toggl -->
-        <span class="cursor-pointer" onclick="toggleTheme()" id="themeIcon">
-          <!-- Default Moon Icon -->
-          <svg xmlns="http://www.w3.org/2000/svg" id="iconSvg" width="24" height="24" fill="none"
-               stroke="currentColor" stroke-width="2" class="lucide lucide-moon">
-            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
-          </svg>
-        </span>
+          <!-- Theme Toggl -->
+          <span class="cursor-pointer" onclick="toggleTheme()" id="themeIcon">
+            <!-- Default Moon Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" id="iconSvg" width="24" height="24" fill="none"
+                stroke="currentColor" stroke-width="2" class="lucide lucide-moon">
+              <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+            </svg>
+          </span>
 
         <!-- Notification Bell -->
         {% if user.is_authenticated %}
@@ -144,7 +144,7 @@
             {% endif %}
           </div>
           <div class="md:flex-1 hidden md:block bg-gradient-to-r from-blue-500 to-indigo-600 p-8 flex items-center justify-center">
-            <img src="{% static 'image/dashboard-illustration.svg' %}" alt="Dashboard Illustration" class="h-64">
+            <img src="{% static 'image/proj1.jpg' %}" alt="Dashboard Illustration" class="h-64 w-full">
           </div>
         </div>
       </div>
@@ -243,7 +243,7 @@
             <div>
               <div class="flex justify-between mb-1">
                 <span class="text-sm font-medium">Total Products</span>
-                <span class="text-sm font-medium">1,245</span>
+                <span class="text-sm font-medium">{{ total_products }}</span>
               </div>
               <div class="w-full bg-gray-200 rounded-full h-2">
                 <div class="bg-blue-600 h-2 rounded-full" style="width: 100%"></div>
@@ -252,7 +252,7 @@
             <div>
               <div class="flex justify-between mb-1">
                 <span class="text-sm font-medium">Low Stock</span>
-                <span class="text-sm font-medium">47</span>
+                <span class="text-sm font-medium">{{ total_stocks}}</span>
               </div>
               <div class="w-full bg-gray-200 rounded-full h-2">
                 <div class="bg-yellow-500 h-2 rounded-full" style="width: 15%"></div>
@@ -261,7 +261,7 @@
             <div>
               <div class="flex justify-between mb-1">
                 <span class="text-sm font-medium">Out of Stock</span>
-                <span class="text-sm font-medium">12</span>
+                <span class="text-sm font-medium">{{ out_of_stock}}</span>
               </div>
               <div class="w-full bg-gray-200 rounded-full h-2">
                 <div class="bg-red-600 h-2 rounded-full" style="width: 5%"></div>
@@ -275,19 +275,19 @@
       <!-- Key Metrics -->
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <div class="bg-white p-4 rounded-xl shadow-md text-center">
-          <div class="text-3xl font-bold text-blue-600 mb-2">1,245</div>
+          <div class="text-3xl font-bold text-blue-600 mb-2">{{ total_products}}</div>
           <div class="text-sm text-gray-600">Total Products</div>
         </div>
         <div class="bg-white p-4 rounded-xl shadow-md text-center">
-          <div class="text-3xl font-bold text-green-600 mb-2">876</div>
+          <div class="text-3xl font-bold text-green-600 mb-2">{{ total_stocks}}</div>
           <div class="text-sm text-gray-600">In Stock</div>
         </div>
-        <div class="bg-white p-4 rounded-xl shadow-md text-center">
-          <div class="text-3xl font-bold text-yellow-600 mb-2">47</div>
+        <div class="bg-white p-4 rounded-xl shadow-md text-center"> 
+          <div class="text-3xl font-bold text-yellow-600 mb-2">{{ total_stocks }}</div>
           <div class="text-sm text-gray-600">Low Stock</div>
         </div>
         <div class="bg-white p-4 rounded-xl shadow-md text-center">
-          <div class="text-3xl font-bold text-red-600 mb-2">12</div>
+          <div class="text-3xl font-bold text-red-600 mb-2">{{ out_of_stock }}</div>
           <div class="text-sm text-gray-600">Out of Stock</div>
         </div>
       </div>
@@ -328,7 +328,7 @@
           </table>
         </div>
         <div class="p-4 border-t border-gray-200 text-center">
-          <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">View all orders</a>
+          <a href="{% url "order" %}" class="text-blue-600 hover:text-blue-800 font-medium">View all orders</a>
         </div>
       </div>
       {% else %}
@@ -357,15 +357,28 @@
 {% endif %}
 
 <script>
+  // Load saved theme from localStorage
+  document.addEventListener('DOMContentLoaded', () => {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.className = savedTheme;
+    updateIcon(savedTheme);
+  });
+
   function toggleTheme() {
     const html = document.documentElement;
-    const themeIcon = document.getElementById("themeIcon");
+    const current = html.classList.contains('dark') ? 'dark' : 'light';
+    const newTheme = current === 'light' ? 'dark' : 'light';
+    html.classList.remove(current);
+    html.classList.add(newTheme);
+    localStorage.setItem('theme', newTheme);
+    updateIcon(newTheme);
+  }
 
-    html.classList.toggle("dark");
-
-    themeIcon.innerHTML = html.classList.contains("dark")
-      ? `<svg xmlns="http://www.w3.org/2000/svg" id="iconSvg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>`
-      : `<svg xmlns="http://www.w3.org/2000/svg" id="iconSvg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-moon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>`;
+  function updateIcon(theme) {
+    const iconSvg = document.getElementById('iconSvg');
+    iconSvg.innerHTML = theme === 'dark'
+      ? `<path d="M3 12a9 9 0 0 1 18 0 6 6 0 0 1-6 6 9 9 0 0 1-12-6Z"/>`  // Sun icon
+      : `<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>`;                // Moon icon
   }
 </script>
 

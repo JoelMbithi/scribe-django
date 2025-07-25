@@ -12,5 +12,6 @@ urlpatterns = [
      path('register/',user_view.Register,name="register"),
      path('products/',views.Product,name="products"),
      path('order/',views.Order,name="order"),
+     path('logout/',user_view.Logout, name='logout')
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

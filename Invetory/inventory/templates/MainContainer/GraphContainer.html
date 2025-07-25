@@ -23,7 +23,7 @@
             <circle cx="10" cy="8" r="5" />
             <path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3" /></svg
         ></span>
-        <h1 class="text-2xl font-bold mt-2">543 K</h1>
+        <h1 class="text-2xl font-bold mt-2">{{ total_users}}</h1>
         <p class="mt-1">Total Customers</p>
       </div>
     </div>
@@ -112,88 +112,88 @@
   <!-- Chart.js CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const ctx = document
-        .getElementById("expensesProfitChart")
-        .getContext("2d");
-      new Chart(ctx, {
-        type: "line",
-        data: {
-          labels: ["Feb", "Mar", "Apr", "May", "Jun", "Jul"],
-          datasets: [
-            {
-              label: "Profit",
-              data: [200, 400, 300, 500, 600, 700],
-              borderColor: "#10b981",
-              backgroundColor: "rgba(16, 185, 129, 0.1)",
-              borderWidth: 2,
-              tension: 0.4,
-              fill: true,
+ <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const ctx = document.getElementById("expensesProfitChart").getContext("2d");
+
+    new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: {{ chart_labels|safe }},
+        datasets: [
+          {
+            label: "Profit",
+            data: {{ profit_data|safe }},
+            borderColor: "#10b981",
+            backgroundColor: "rgba(16, 185, 129, 0.1)",
+            borderWidth: 2,
+            tension: 0.4,
+            fill: true,
+          },
+          {
+            label: "Expenses",
+            data: {{ expense_data|safe }},
+            borderColor: "#ef4444",
+            backgroundColor: "rgba(239, 68, 68, 0.1)",
+            borderWidth: 2,
+            tension: 0.4,
+            fill: true,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true,
+            grid: {
+              color: "#e5e7eb",
+              drawBorder: false,
             },
-            {
-              label: "Expenses",
-              data: [300, 350, 250, 400, 500, 550],
-              borderColor: "#ef4444",
-              backgroundColor: "rgba(239, 68, 68, 0.1)",
-              borderWidth: 2,
-              tension: 0.4,
-              fill: true,
-            },
-          ],
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            y: {
-              beginAtZero: true,
-              grid: {
-                color: "#e5e7eb",
-                drawBorder: false,
-              },
-              ticks: {
-                color: "#6b7280",
-              },
-            },
-            x: {
-              grid: {
-                display: false,
-                drawBorder: false,
-              },
-              ticks: {
-                color: "#6b7280",
-              },
+            ticks: {
+              color: "#6b7280",
             },
           },
-          plugins: {
-            legend: {
-              position: "top",
-              labels: {
-                color: "#374151",
-                boxWidth: 12,
-                padding: 16,
-                usePointStyle: true,
-                pointStyle: "circle",
-              },
+          x: {
+            grid: {
+              display: false,
+              drawBorder: false,
             },
-            tooltip: {
-              backgroundColor: "#1f2937",
-              titleColor: "#f9fafb",
-              bodyColor: "#f9fafb",
-              padding: 12,
+            ticks: {
+              color: "#6b7280",
+            },
+          },
+        },
+        plugins: {
+          legend: {
+            position: "top",
+            labels: {
+              color: "#374151",
+              boxWidth: 12,
+              padding: 16,
               usePointStyle: true,
-              cornerRadius: 8,
+              pointStyle: "circle",
             },
           },
-          elements: {
-            point: {
-              radius: 4,
-              hoverRadius: 6,
-            },
+          tooltip: {
+            backgroundColor: "#1f2937",
+            titleColor: "#f9fafb",
+            bodyColor: "#f9fafb",
+            padding: 12,
+            usePointStyle: true,
+            cornerRadius: 8,
           },
         },
-      });
+        elements: {
+          point: {
+            radius: 4,
+            hoverRadius: 6,
+          },
+        },
+      },
     });
-  </script>
+  });
+</script>
+
 </nav>

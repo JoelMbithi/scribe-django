@@ -69,6 +69,10 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                  'django.template.context_processors.tz',
                  'inventory.context_processors.menu_items',
+                  'inventory.context_processors.global_data',
+                 'inventory.context_processors.global_orders',
+                  
+
             ],
         },
     },
