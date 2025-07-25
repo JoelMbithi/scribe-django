@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 # Create your models here.
 
@@ -15,7 +16,14 @@ class Products(models.Model):
     
 
 
-class Users(models.Model):
-    name = models.CharField(max_length=100)
-    email = models.CharField(max_length=100, unique=True)
-    password = models.CharField(max_length=200)
+
+
+class Orders(models.Model):
+    product = models.ForeignKey(Products, on_delete=models.CASCADE)
+    staff = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    order_quantity = models.PositiveIntegerField()
+    date = models.DateTimeField(auto_now_add=True)
+
+    def  __str__(self):
+        return f'{self.product} ordered by {self.staff.username}'
+    
