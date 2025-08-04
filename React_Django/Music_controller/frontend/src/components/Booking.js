@@ -49,9 +49,9 @@ export default class Booking extends Component {
       }),
     };
 
-    fetch("/api/booking", requestOptions)
+    fetch("/api/booking/", requestOptions)
       .then((response) => response.json())
-      .then((data) => console.log("Booking response:", data))
+      .then((data) => this.props.history.push(`/playDesk/${data.code}`))
       .catch((error) => console.error("Booking error:", error));
   }
 

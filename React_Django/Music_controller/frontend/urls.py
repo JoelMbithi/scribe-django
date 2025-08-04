@@ -4,5 +4,6 @@ from .views import index
 urlpatterns = [
     
     path('',index),
-    path('booking/',index)
+    path('booking/',index),
+    path('playDesk/<str:playDeskCode>',index)
 ]
