@@ -2,13 +2,16 @@ import React from "react";
 import { MdDelete } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { IoIosCheckboxOutline } from "react-icons/io";
+import { MdCheckBoxOutlineBlank } from "react-icons/md";
 
 
 
 
-const Table = () => {
+
+const Table = ({todos,setTodos,isLoading}) => {
+
   return (
-    <div className="mt-8 ring-2 ring-indigo-300 rounded-lg p-4">
+    <div className="mt-8  ring-1 ring-indigo-300 rounded-lg p-4">
       <table className="w-full text-left border-collapse ">
         <thead className="bg-indigo-200  ">
           <tr className="text-gray-700 ">
@@ -21,24 +24,37 @@ const Table = () => {
           </tr>
         </thead>
         <tbody className=" ">
-            <tr>
-                 <td className="p-3 text-xl">
-                <span className="cursor-pointer">
-                <IoIosCheckboxOutline />
+          {/* Map through todos and display each todo item */}
+          { isLoading ? <div className="text-center p-4">Loading...</div> :
+          <>
+           { todos.map((todoItem,index) => {
+            return (
+               <tr>
+                 <td className="p-3 text-xl " title={todoItem.id}>
+                <span className="cursor-pointer" >{todoItem.complete ? <IoIosCheckboxOutline className="text-green-600" /> 
+                :
+                <MdCheckBoxOutlineBlank />
+
+                 }
+               
               </span></td>
-            <td className="p-3 text-sm">Finish homework</td>
+            <td className="p-3 text-sm">{todoItem.body ||  "Finish homework"}</td>
             <td className="p-3 text-sm">
               <span className="bg-green-300 text-green-700 px-2 py-1 rounded text-xs font-semibold">
-                Done
+                 {todoItem.complete ? "Done" : "Pending"}
               </span>
             </td>
-            <td className="p-3 text-sm">2025-08-05</td>
-            <td className="p-3 text-sm">High</td>
+            <td className="p-3 text-sm">{todoItem.updated || " 2025-08-05"}</td>
+            <td className="p-3 text-sm">{todoItem.priority || "High"}</td>
             <td className=" text-xl flex flex-row">
               <span className="p-3 cursor-pointer text-green-600"><FaRegEdit /></span>
               <span className="p-3 cursor-pointer text-red-600 "><MdDelete /></span>
             </td>
           </tr>
+            )
+           })}
+           </>
+          }
          
         </tbody>
       </table>
