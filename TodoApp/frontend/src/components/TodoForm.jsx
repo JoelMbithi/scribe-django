@@ -1,14 +1,27 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+
 
 const TodoForm = () => {
   const [form, setForm] = useState({
-    title: '',
-    description: '',
-    priority: 'Medium',
-    status: 'Pending',
+    'body' :''
   });
 
+  const handleChange = (e) => {
+    setForm(prev => ({
+      ...prev,
+      'body':e.target.value
+    }))
+    console.log(form);
+  }
 
+  const postTodo = async () => {
+    try {
+      await axios.post('http://127.0.0.1:8002/api/todo/',form)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <div className="mx-auto mt-10 b-indigo-300 p-6 rounded-lg ring-1 ring-indigo-300">
@@ -22,6 +35,7 @@ const TodoForm = () => {
             type="text"
             name="title"
             value={form.title}
+            onChange={handleChange}
             
             required
             className="mt-1 block w-full border bg-indigo-100 border-gray-300  rounded-md p-2 focus:ring-indigo-500 focus:border-indigo-500"
@@ -37,12 +51,13 @@ const TodoForm = () => {
           <select
             name="priority"
             value={form.priority}
+            onChange={handleChange}
             
             className="mt-1 block w-full border bg-indigo-100 border-gray-300 rounded-md p-2 focus:ring-indigo-500 focus:border-indigo-500"
           >
-            <option>Low</option>
-            <option>Medium</option>
             <option>High</option>
+            <option>Low</option>
+            
           </select>
         </div>
 
@@ -52,12 +67,13 @@ const TodoForm = () => {
           <select
             name="status"
             value={form.status}
+            onChange={handleChange}
             
             className="mt-1 block w-full border bg-indigo-100 border-gray-300 rounded-md p-2 focus:ring-indigo-500 focus:border-indigo-500"
           >
-            <option>Pending</option>
+            
             <option>In Progress</option>
-            <option>Done</option>
+            <option>Pending</option>
           </select>
         </div>
 
@@ -65,9 +81,10 @@ const TodoForm = () => {
         <div>
           <button
             type="submit"
-            className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition"
+            onClick={postTodo}
+            className="w-full bg-indigo-700 text-white text-sm py-2 px-2 rounded-md hover:bg-indigo-600 transition"
           >
-            Add Task
+            ADD TODO
           </button>
         </div>
       </form>

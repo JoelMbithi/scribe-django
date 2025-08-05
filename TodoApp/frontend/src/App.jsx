@@ -31,7 +31,7 @@ const App = () => {
      <nav className='pt-8'>
       <h1 className='text-5xl text-center font-bold'> Todo List</h1>
      </nav>
-     <TodoForm/>
+     <TodoForm />
      <Table 
      todos = {todos}
      setTodos = {setTodos}

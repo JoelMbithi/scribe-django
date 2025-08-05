@@ -3,12 +3,22 @@ import { MdDelete } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { IoIosCheckboxOutline } from "react-icons/io";
 import { MdCheckBoxOutlineBlank } from "react-icons/md";
+import axios from "axios";
 
 
 
 
 
 const Table = ({todos,setTodos,isLoading}) => {
+
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://127.0.0.1:8002/api/todo/${id}/`)
+      setTodos(prevTodos => prevTodos.filter(todo => todo.id !== id));
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <div className="mt-8  ring-1 ring-indigo-300 rounded-lg p-4">
@@ -23,40 +33,53 @@ const Table = ({todos,setTodos,isLoading}) => {
             <th className="p-2 text-sm font-bold tracking-wide text-left">Actions</th>
           </tr>
         </thead>
-        <tbody className=" ">
-          {/* Map through todos and display each todo item */}
-          { isLoading ? <div className="text-center p-4">Loading...</div> :
-          <>
-           { todos.map((todoItem,index) => {
-            return (
-               <tr>
-                 <td className="p-3 text-xl " title={todoItem.id}>
-                <span className="cursor-pointer" >{todoItem.complete ? <IoIosCheckboxOutline className="text-green-600" /> 
-                :
-                <MdCheckBoxOutlineBlank />
-
-                 }
-               
-              </span></td>
-            <td className="p-3 text-sm">{todoItem.body ||  "Finish homework"}</td>
-            <td className="p-3 text-sm">
-              <span className="bg-green-300 text-green-700 px-2 py-1 rounded text-xs font-semibold">
-                 {todoItem.complete ? "Done" : "Pending"}
+      <tbody>
+  {isLoading ? (
+    <tr>
+      <td colSpan="6" className="text-center p-4">Loading...</td>
+    </tr>
+  ) : (
+    <>
+      {todos.map((todoItem, index) => (
+        <React.Fragment key={todoItem.id || index}>
+          <tr>
+            <td className="p-3 text-xl" title={todoItem.d}>
+              <span className="cursor-pointer">
+                {todoItem.complete ? (
+                  <IoIosCheckboxOutline className="text-green-600" />
+                ) : (
+                  <MdCheckBoxOutlineBlank />
+                )}
               </span>
             </td>
-            <td className="p-3 text-sm">{todoItem.updated || " 2025-08-05"}</td>
+            <td className="p-3 text-sm">{todoItem.body || "Finish homework"}</td>
+            <td className="p-3 text-sm">
+              <span className={`px-2 py-1 rounded text-xs font-semibold ${
+                todoItem.complete ? "bg-green-300 text-green-700" : "bg-red-300 text-red-700"
+              }`}>
+                {todoItem.complete ? "Done" : "In Progress"}
+              </span>
+            </td>
+            <td className="p-3 text-sm">{new Date(todoItem.created).toLocaleString()}</td>
             <td className="p-3 text-sm">{todoItem.priority || "High"}</td>
-            <td className=" text-xl flex flex-row">
+            <td className="text-xl flex flex-row">
               <span className="p-3 cursor-pointer text-green-600"><FaRegEdit /></span>
-              <span className="p-3 cursor-pointer text-red-600 "><MdDelete /></span>
+              <span className="p-3 cursor-pointer text-red-600"><MdDelete onClick={() => handleDelete(todoItem.id )} /></span>
             </td>
           </tr>
-            )
-           })}
-           </>
-          }
-         
-        </tbody>
+
+          {/* Divider row */}
+          <tr>
+            <td colSpan="6">
+              <hr className="border-t border-gray-400" />
+            </td>
+          </tr>
+        </React.Fragment>
+      ))}
+    </>
+  )}
+</tbody>
+
       </table>
     </div>
   );
