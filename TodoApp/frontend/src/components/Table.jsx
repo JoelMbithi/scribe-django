@@ -20,6 +20,22 @@ const Table = ({todos,setTodos,isLoading}) => {
     }
   }
 
+  const handleEdit = async (id,value) => {
+    try {
+    const res =  await axios.patch(`http://127.0.0.1:8002/api/todo/${id}/`,value)
+      setTodos(prevTodos => prevTodos.map(todo => todo.id === id ? res.data : todo));
+      console.log(res.data);
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const handleCheckbox = (id,value) => {
+    handleEdit(id, {
+      'complete': !value
+    })
+  }
+
   return (
     <div className="mt-8  ring-1 ring-indigo-300 rounded-lg p-4">
       <table className="w-full text-left border-collapse ">
@@ -44,7 +60,7 @@ const Table = ({todos,setTodos,isLoading}) => {
         <React.Fragment key={todoItem.id || index}>
           <tr>
             <td className="p-3 text-xl" title={todoItem.d}>
-              <span className="cursor-pointer">
+              <span onClick={() => handleCheckbox(todoItem.id, todoItem.complete)} className="cursor-pointer">
                 {todoItem.complete ? (
                   <IoIosCheckboxOutline className="text-green-600" />
                 ) : (
@@ -63,7 +79,7 @@ const Table = ({todos,setTodos,isLoading}) => {
             <td className="p-3 text-sm">{new Date(todoItem.created).toLocaleString()}</td>
             <td className="p-3 text-sm">{todoItem.priority || "High"}</td>
             <td className="text-xl flex flex-row">
-              <span className="p-3 cursor-pointer text-green-600"><FaRegEdit /></span>
+              <span className="p-3 cursor-pointer text-green-600"><FaRegEdit onClick={() => handleEdit(todoItem.id)}/></span>
               <span className="p-3 cursor-pointer text-red-600"><MdDelete onClick={() => handleDelete(todoItem.id )} /></span>
             </td>
           </tr>
