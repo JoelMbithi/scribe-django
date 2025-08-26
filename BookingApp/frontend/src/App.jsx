@@ -7,6 +7,7 @@ import Navbar from "./components /Navbar/Navbar";
 import Display from "./components /Display/Display";
 import StarticDisplay from "./components /Display/StarticDisplay";
 import OffersRooms from "./components /Display/OffersRooms";
+import DiscoverMore from "./components /Display/DiscoverMore";
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
     <StarticDisplay/>
     <Display/>
     <OffersRooms/>
+    <DiscoverMore/>
     </>
   
   );
