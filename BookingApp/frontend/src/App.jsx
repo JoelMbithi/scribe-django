@@ -4,6 +4,9 @@ import {Route, Routes } from "react-router-dom";
 import "./index.css";
 import { UserContext } from "./components /UserContext";
 import Navbar from "./components /Navbar/Navbar";
+import Display from "./components /Display/Display";
+import StarticDisplay from "./components /Display/StarticDisplay";
+import OffersRooms from "./components /Display/OffersRooms";
 
 
 function App() {
@@ -30,6 +33,9 @@ function App() {
   
     <>
     <Navbar/>
+    <StarticDisplay/>
+    <Display/>
+    <OffersRooms/>
     </>
   
   );
