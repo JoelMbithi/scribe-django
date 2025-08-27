@@ -4,9 +4,14 @@ from rest_framework.decorators import api_view
 from rest_framework.reverse import reverse
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework import permissions
+from rest_framework.exceptions import AuthenticationFailed
 from .models import Room,OccupiedDate,User
 from .serializers import RoomSerializer,OccupiedDateSerializer,UserSerializer
 from rest_framework.authtoken.models import Token
+from .permissions import IsAdminOrReadOnly
+from django.contrib.auth import authenticate, login
+
 
 # Create your views here.
 @api_view(['GET'])
@@ -20,15 +25,18 @@ def api_root(request,format=None):
 class RoomList(generics.ListCreateAPIView):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
+    permission_classes = [IsAdminOrReadOnly]
 
 class RoomDetails(generics.RetrieveUpdateDestroyAPIView):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
+    permission_classes = [IsAdminOrReadOnly]
 
 
 class OccupiedDatesList(generics.ListCreateAPIView):
     queryset = OccupiedDate.objects.all()
     serializer_class = OccupiedDateSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
         user = self.request.user
@@ -40,6 +48,7 @@ class OccupiedDatesList(generics.ListCreateAPIView):
 class OccupiedDateDetails(generics.RetrieveUpdateDestroyAPIView):
     queryset = OccupiedDate.objects.all()
     serializer_class = OccupiedDateSerializer
+    permission_classes = [IsAdminOrReadOnly]
 
 class UserList(generics.ListAPIView):
     queryset =User.objects.all()
@@ -64,7 +73,7 @@ class UserDetails(generics.RetrieveAPIView):
 
         if obj == user or user.is_staff or user.is_superuser:
             return obj
-        raise PermissionDenied("You are not allowed to view this user.")
+        raise permissions.PermissionDenied("You are not allowed to view this user.")
     
 class Register(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -80,7 +89,7 @@ class Register(generics.CreateAPIView):
                 "id":user.id,
                 "username":user.username,
                 "email":user.email,
-                "full_name": user.fullname
+                "full_name": user.full_name
             },
             "token":token.key
         }
@@ -91,10 +100,10 @@ class Register(generics.CreateAPIView):
         
 class Login(APIView):
     def post(self,request,*args,**kwargs):
-        username = request.data.get("Username")
+        email = request.data.get("email")
         password = request.data.get("password")
 
-        user = authenticate(username=username,password=password)
+        user = authenticate(request, email=email, password=password)
 
         if user is None:
             raise AuthenticationFailed('Invalid username of password')
@@ -106,7 +115,7 @@ class Login(APIView):
                 "id":user.id,
                 "username":user.username,
                 "email":user.email,
-                "full_name": user.fullname
+                "full_name": user.full_name
             },
             "token":token.key
         })
