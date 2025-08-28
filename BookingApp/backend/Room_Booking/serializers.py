@@ -15,22 +15,29 @@ class RoomImageSerializer(serializers.ModelSerializer):
         model = RoomImage
         fields = ['id','image','caption','room']
 
-class RoomSerializer(serializers.HyperlinkedModelSerializer):  
-    images = RoomImageSerializer(many=True,read_only=True)
-    class Meta:
-        model = Room
-        fields = ['name', 'type', 'pricePerNight', 'currency', 'maxOccupancy', 'description', 'images']
-
-
 class OccupiedDateSerializer(serializers.HyperlinkedModelSerializer):
     serializers.HyperlinkedRelatedField(
         view_name = 'room-detail',
         queryset = Room.objects.all()
     )
+    user = serializers.HyperlinkedRelatedField(
+        view_name = "user_detail",
+        queryset =User.objects.all()
+    )
     class Meta: 
         model = OccupiedDate
-        fields = ['url','id','room','date']
+        fields = ['url','id','room','date','user']
          
+
+class RoomSerializer(serializers.HyperlinkedModelSerializer):  
+    images = RoomImageSerializer(many=True,read_only=True)
+    occupiedDates = OccupiedDateSerializer(many=True,read_only=True)
+    class Meta:
+        model = Room
+        fields = ['id', 'name', 'type', 'pricePerNight', 'currency', 'maxOccupancy', 'description', 'images','occupiedDates']
+
+
+
    
     
 class UserSerializer(serializers.HyperlinkedModelSerializer):

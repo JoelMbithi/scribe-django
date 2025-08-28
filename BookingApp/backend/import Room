@@ -1,0 +1,21 @@
+                       List of relations
+ Schema |                Name                | Type  |  Owner   
+--------+------------------------------------+-------+----------
+ public | Room_Booking_occupieddate          | table | postgres
+ public | Room_Booking_room                  | table | postgres
+ public | Room_Booking_roomimage             | table | postgres
+ public | Room_Booking_user                  | table | postgres
+ public | Room_Booking_user_groups           | table | postgres
+ public | Room_Booking_user_user_permissions | table | postgres
+ public | auth_group                         | table | postgres
+ public | auth_group_permissions             | table | postgres
+ public | auth_permission                    | table | postgres
+ public | authtoken_token                    | table | postgres
+ public | django_admin_log                   | table | postgres
+ public | django_content_type                | table | postgres
+ public | django_migrations                  | table | postgres
+ public | django_session                     | table | postgres
+ public | room                               | table | postgres
+ public | room_image                         | table | postgres
+(16 rows)
+
