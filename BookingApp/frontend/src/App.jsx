@@ -8,6 +8,9 @@ import Display from "./components /Display/Display";
 import StarticDisplay from "./components /Display/StarticDisplay";
 import OffersRooms from "./components /Display/OffersRooms";
 import DiscoverMore from "./components /Display/DiscoverMore";
+import Experience from "./components /Display/Experience";
+import News from "./components /News/News";
+import Footer from "./Footer/Footer";
 
 
 function App() {
@@ -38,6 +41,9 @@ function App() {
     <Display/>
     <OffersRooms/>
     <DiscoverMore/>
+    <Experience/>
+    <News/>
+    <Footer/>
     </>
   
   );

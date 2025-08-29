@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Links } from "react-router-dom";
 import hotelBg from "../../assets/imagedisplay5.jpeg";
 import { BiLogoAirbnb } from "react-icons/bi";
 import { RiArrowDropDownLine, RiMenuFill } from "react-icons/ri";
@@ -7,14 +7,50 @@ import { CiSearch } from "react-icons/ci";
 import { HiOutlineShoppingCart } from "react-icons/hi";
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 import Tistar from "../Navbar/Tistar"
+import AuthForm from "../Auth/AuthForm";
+import { useEffect } from "react";
 
 const Navbar = () => {
   const [openDropdown, setOpenDropdown] = useState(null);
-
+  const [user,setUser] = useState(null);
+  const [showAuth, setShowAuth] = useState(false);
   const toggleDropdown = (menu) => {
     setOpenDropdown(openDropdown === menu ? null : menu);
   };
 
+   const fetchUser = async () => {
+    try {
+      // get user data from localStorage
+      const storedUser = localStorage.getItem("user");
+
+      if (storedUser) {
+        // parse JSON back into object
+        const parsedUser = JSON.parse(storedUser);
+        setUser(parsedUser);
+      } else {
+        console.log("No user found in localStorage");
+      }
+    } catch (error) {
+      console.log(error)
+    }
+   }
+
+   useEffect (() => {
+    fetchUser()
+   },[])
+
+   const handleLogout = () => {
+  const confirmLogout = window.confirm("Are you sure you want to log out?");
+  if (confirmLogout) {
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    alert("You have been logged out.");
+    // redirect to login page if needed
+    window.location.href = "/login";
+  }
+};
+
+  
   return (
     <nav
       className="w-full h-screen bg-cover flex flex-col bg-center shadow-md"
@@ -38,9 +74,36 @@ const Navbar = () => {
           <a href="#" className="hover:text-gray-300"><FaTwitter /></a>
           <a href="#" className="hover:text-gray-300"><FaInstagram /></a>
           <a href="#" className="hover:text-gray-300"><FaLinkedinIn /></a>
-        </div>
-      </div>
-      <hr />
+         
+          {user ? (
+             // If user exists in localStorage
+    <div className="flex items-center gap-2">
+      <span className="text-xs">Welcome, {user.full_name || user.username || "Guest"}</span>
+      <button
+        onClick={() => {
+         handleLogout()
+        }}
+        className="hover:text-red-400 text-xs"
+      >
+        Logout
+      </button>
+    </div>
+    ) : (
+      // Login Button
+      <>
+        <button 
+          onClick={() => setShowAuth(true)}  
+          className="hover:text-gray-300"
+        >
+          Login
+        </button>
+        {/* Popup Modal (AuthForm handles its own styling) */}
+        {showAuth && <AuthForm onClose={() => setShowAuth(false)} />}
+      </>
+    )}
+  </div>
+</div>
+<hr />
 
       {/* Middle Section */}
       <div className="flex flex-row justify-evenly items-center gap-4 mt-8">
@@ -79,9 +142,9 @@ const Navbar = () => {
             </button>
             {openDropdown === "rooms" && (
               <div className="absolute mt-2 ring-1 ring-amber-100  text-amber-100 rounded-md shadow-md w-40">
-                <Link to="/deluxe" className="block px-4 py-2 hover:text-gray-200">Deluxe Room</Link>
-                <Link to="/suite" className="block px-4 py-2 hover:text-gray-200">Luxury Suite</Link>
-                <Link to="/family" className="block px-4 py-2 hover:text-gray-200">Family Room</Link>
+                <Link to="/rooms" className="block px-4 py-2 hover:text-gray-200">Deluxe Room</Link>
+                <Link to="/rooms" className="block px-4 py-2 hover:text-gray-200">Luxury Suite</Link>
+                <Link to="/rooms" className="block px-4 py-2 hover:text-gray-200">Family Room</Link>
               </div>
             )}
           </div>
@@ -127,7 +190,10 @@ const Navbar = () => {
         {/* MENU AND SEARCH */}
         <div className="flex flex-row gap-4 text-amber-100">
           <CiSearch className="cursor-pointer" />
-          <HiOutlineShoppingCart className="cursor-pointer" />
+           <Link to="/bookedRooms" className="hover:text-gray-300">
+           <HiOutlineShoppingCart className="cursor-pointer" />
+          </Link>
+          
           <RiMenuFill className="cursor-pointer" />
         </div>
       </div>
@@ -151,7 +217,7 @@ const Navbar = () => {
     </h1>
     <p className="text-xs text-amber-100 text-center mt-2">Finding the perfect stay has never been this simple. Explore, compare, and book hotels instantly. 
       Let us make your journey as comfortable as your destination</p>
-      <button className="mt-3 bg-black text-amber-200 text-center px-4 py-2 font-bold text-sm">BOOK NOW</button>
+      <Link to="/booking" className="mt-3 bg-black text-amber-200 text-center px-4 py-2 font-bold text-sm">BOOK NOW</Link>
   </div>
 </div>
 
